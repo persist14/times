@@ -1,7 +1,9 @@
 <template>
   <div class="login-container">
       <!-- 标题 -->
-      <van-nav-bar class="page-nav-bar"  title="登录"/>
+      <van-nav-bar class="page-nav-bar"  title="登录">
+        <van-icon @click="$router.back()" slot="left" class="backBeforePage" name="cross" />
+      </van-nav-bar>
       <!-- 表单 -->
       <van-form  @submit="Onsubmit" ref="loginFormRef"  >
     <van-field
@@ -69,6 +71,9 @@ export default {
         const { data } = await login(this.user)
         this.$store.commit('setToken', data.data)
         this.$toast.success('登录成功')
+
+        // 登陆成功后进行跳转
+        this.$router.push('/my')
       } catch (error) {
         // 判断出错信息
         if (error.response.status === 400) {

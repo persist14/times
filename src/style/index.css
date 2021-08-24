@@ -73,9 +73,13 @@
 .toutiao-zuopin:before {
   content: "\e615";
 }
+body {
+  background-color: #f4f6f8 !important;
+}
 .page-nav-bar {
   background-color: #3296fa !important;
 }
-.page-nav-bar .van-nav-bar__title {
+.page-nav-bar .van-nav-bar__title,
+.page-nav-bar .backBeforePage {
   color: #fff !important;
 }

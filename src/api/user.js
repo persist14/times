@@ -14,3 +14,9 @@ export const sendSms = mobile => {
     url: `app/v1_0/sms/codes/${mobile}`
   })
 }
+// 获取用户自己信息模块封装
+export const getUserInfo = () => {
+  return request({
+    url: '/app/v1_0/user'
+  })
+}
