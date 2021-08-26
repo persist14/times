@@ -20,3 +20,9 @@ export const getUserInfo = () => {
     url: '/app/v1_0/user'
   })
 }
+// 封装用户自己的引导列表
+export const getUserChannels = () => {
+  return request({
+    url: '/app/v1_0/user/channels'
+  })
+}

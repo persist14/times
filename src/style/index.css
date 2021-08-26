@@ -83,3 +83,6 @@ body {
 .page-nav-bar .backBeforePage {
   color: #fff !important;
 }
+.van-nav-bar__title {
+  max-width: unset !important;
+}
