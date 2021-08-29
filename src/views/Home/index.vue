@@ -12,10 +12,20 @@
         </van-tab>
         <!-- 站位符 让最后一个盒子显示完整 -->
         <div slot="nav-right" class="placeholder" ></div>
-        <div slot="nav-right" class="hamburger-btn">
+        <div slot="nav-right" class="hamburger-btn" @click="isChannelsEditShow = true">
           <i class="toutiao toutiao-gengduo" ></i>
         </div>
       </van-tabs>
+      <!-- 频道编辑弹出层 -->
+      <van-popup
+        v-model="isChannelsEditShow"
+        closeable
+        close-icon-position="top-left"
+        position="bottom"
+        :style="{ height: '100%' }"
+      >
+        <ChannelEidt :myChannels="userChannels" :active="active" @update-active="updateActive"></ChannelEidt>
+      </van-popup>
   </div>
 
 </template>
@@ -23,15 +33,20 @@
 <script>
 import { getUserChannels } from '@/api/user'
 import ArticalList from './components/ArticalList.vue'
+import ChannelEidt from './components/Channles-edit.vue'
+import { mapState } from 'vuex'
+import { getItem } from '@/utils/storage'
 export default {
   name: 'homeIndex',
   components: {
-    ArticalList
+    ArticalList,
+    ChannelEidt
   },
   data () {
     return {
       active: 0,
-      userChannels: []
+      userChannels: [],
+      isChannelsEditShow: true
     }
   },
   created () {
@@ -40,13 +55,35 @@ export default {
   methods: {
     async loadChannels () {
       try {
-        const { data } = await getUserChannels()
-        // console.log(data)
-        this.userChannels = data.data.channels
+        let channels = []
+
+        // 判断用户时候登陆 登陆获取用户的频道列表数据 未登录获取本地存储的数据 本地存储没数据到的情况下使用默认的频道列表数据
+        if (this.user) {
+          const { data } = await getUserChannels()
+          // console.log(data)
+          channels = data.data.channels
+        } else {
+          const localChannels = getItem('TOUTIAO_CHANNELS')
+          if (localChannels) {
+            channels = localChannels
+          } else {
+            const { data } = await getUserChannels()
+            // console.log(data)
+            channels = data.data.channels
+          }
+          this.userChannels = channels
+        }
       } catch (error) {
         console.log('加载用户频道列表失败')
       }
+    },
+    updateActive (index, isChannelsEditShow) {
+      this.active = index
+      this.isChannelsEditShow = isChannelsEditShow
     }
+  },
+  computed: {
+    ...mapState(['user'])
   }
 }
 </script>
