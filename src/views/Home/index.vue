@@ -69,7 +69,7 @@ export default {
             channels = localChannels
           } else {
             const { data } = await getUserChannels()
-            // console.log(data)
+            console.log(data)
             channels = data.data.channels
           }
         }
