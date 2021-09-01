@@ -1,8 +1,8 @@
 <template>
   <div class="home-container" >
     <!-- 搜索区域 -->
-     <van-nav-bar class="page-nav-bar" fixed >
-        <van-button  class="search-btn"  slot="title" size="small"  icon="search" round type="info">搜索</van-button>
+     <van-nav-bar class="page-nav-bar" fixed  >
+        <van-button  class="search-btn" to="/search"  slot="title" size="small"  icon="search" round type="info">搜索</van-button>
       </van-nav-bar>
       <!--导航栏区域 -->
       <!-- swipeable 开启滑动切换 -->
@@ -62,7 +62,7 @@ export default {
           const { data } = await getUserChannels()
           // console.log(data)
           channels = data.data.channels
-          console.log(channels)
+          // console.log(channels)
         } else {
           const localChannels = getItem('TOUTIAO_CHANNELS')
           if (localChannels) {
